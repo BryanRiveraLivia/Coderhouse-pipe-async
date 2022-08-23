@@ -1,0 +1,74 @@
+<header role="banner">
+    <img
+            width="40"
+            alt="Angular Logo"
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+    />
+    <span>Angular Async Pipe</span>
+</header>
+
+<main role="main">
+
+    <h1>Non-async Pipes</h1>
+
+    <app-pipe-example></app-pipe-example>
+
+
+    <hr>
+
+
+    <h1>Renderizar info con Async Pipe</h1>
+
+    <ng-template #loading>
+        <i class="fas fa-spinner fa-spin"></i> Loading...
+    </ng-template>
+
+    <div class="user-list">
+        <ng-container *ngIf="(users$ | async) as users; else loading;">
+            <ul>
+                <li *ngFor="let user of users"> {{user.name.first}} {{user.name.last}}</li>
+            </ul>
+        </ng-container>
+    </div>
+
+    <p class="info">
+      Cada vez que usa la canalización asíncrona en su plantilla, esa es una suscripción separada a sus datos asíncronos.
+        Si necesita múltiples referencias en su plantilla, declárelas como una variable para evitar crear múltiples suscripciones.
+    </p>
+
+
+    <hr>
+
+
+    <h1>Actualizar info con Async Pipe</h1>
+
+    <ng-template #loadingRefresh>
+        <i class="fas fa-spinner fa-spin"></i> Cargando...
+    </ng-template>
+
+    <ng-container *ngIf="(usersWithUpdates$ | async) as usersRefresh; else loadingRefresh;">
+        <ul>
+            <li *ngFor="let user of usersRefresh"> {{user.name.first}} {{user.name.last}}</li>
+        </ul>
+    </ng-container>
+
+    <label for="firstName">Nombres: </label>
+    <input type="text" id="firstName" [(ngModel)]="userToAdd.name.first">
+
+    <label for="lastName">Apellidos: </label>
+    <input type="text" id="lastName" [(ngModel)]="userToAdd.name.last">
+
+<!--    <button type="button" (click)="addUserWithBehaviorSubject()">Add User</button>-->
+    <button type="button" (click)="addUserWithReassignment()">Agregar usuario</button>
+
+
+    <hr>
+
+
+    <h1>Lista - Async Pipe</h1>
+
+    <h2>Ejemplo de tiempo:</h2>
+    {{1000 | timer | async}}
+
+</main>
+
